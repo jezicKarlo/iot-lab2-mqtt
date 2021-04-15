@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 public class TempHumPublisher {
     private static final String BROKER = "tcp://localhost:1883";
     private static final String CLIENT_ID = "TempHumPublisher";
-    private static final int QOS = 2;
+    private static final int QOS = 0;
     private static final String TEMP_TOPIC = "sensor/temperature";
     private static final String HUM_TOPIC = "sensor/humidity";
 
@@ -37,6 +37,7 @@ public class TempHumPublisher {
                     new MqttMessage(String.valueOf(sensor.getTemperature()).getBytes(StandardCharsets.UTF_8));
             temperatureMessage.setQos(QOS);
 
+            //for (int i = 0; i < 10000; i++) {
             System.out.println("Publish humidity");
             client.publish(HUM_TOPIC, humidityMessage);
             System.out.println("Published humidity");
@@ -44,6 +45,7 @@ public class TempHumPublisher {
             System.out.println("Publish temperature");
             client.publish(TEMP_TOPIC, temperatureMessage);
             System.out.println("Published temperature");
+            //}
 
             client.disconnect();
             System.out.println("Disconnected");
